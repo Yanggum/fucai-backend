@@ -1,0 +1,30 @@
+swagger: '2.0'
+info:
+  title: Example API
+  description: Example API with Swagger
+  version: 1.0.0
+host: localhost:3000
+basePath: /api/v1
+schemes:
+  - http
+paths:
+  /users:
+    get:
+      summary: Get a list of users
+      responses:
+        '200':
+          description: OK
+  /users/{id}:
+    get:
+      summary: Get a user by ID
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: ID of the user to get
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: User not found

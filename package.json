@@ -1,0 +1,20 @@
+{
+  "name": "nodesample",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "mariadb": "^3.1.0",
+    "morgan": "~1.9.1",
+    "swagger-ui-express": "^4.6.2",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "@types/swagger-ui-dist": "^3.30.1"
+  }
+}
