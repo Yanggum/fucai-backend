@@ -1,0 +1,40 @@
+<mapper namespace="ChatParticipant">
+
+    <resultMap id="chatParticipantMap" type="ChatParticipant">
+        <id property="id" column="id"/>
+        <result property="chatId" column="chat_id"/>
+        <result property="characterId" column="character_id"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <select id="findByChatId" resultMap="chatParticipantMap">
+        SELECT *
+        FROM chat_participants
+        WHERE chat_id = #{chatId}
+    </select>
+
+    <select id="findByChatIdAndCharacterId" resultMap="chatParticipantMap">
+        SELECT *
+        FROM chat_participants
+        WHERE chat_id = #{chatId}
+        AND character_id = #{characterId}
+    </select>
+
+    <insert id="create">
+        INSERT INTO chat_participants (chat_id, character_id)
+        VALUES (#{chatId}, #{characterId})
+    </insert>
+
+    <delete id="deleteByChatId">
+        DELETE FROM chat_participants
+        WHERE chat_id = #{chatId}
+    </delete>
+
+    <delete id="deleteByChatIdAndCharacterId">
+        DELETE FROM chat_participants
+        WHERE chat_id = #{chatId}
+        AND character_id = #{characterId}
+    </delete>
+
+</mapper>

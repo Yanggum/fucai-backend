@@ -1,0 +1,30 @@
+<!-- mapper/users.xml -->
+<mapper namespace="users">
+    <insert id="insert">
+        INSERT INTO fucai.users (
+        email,
+        encrypted_password
+        ) VALUES (
+        #{email},
+        #{encryptedPassword}
+        )
+    </insert>
+
+    <select id="selectById" resultType="object">
+        SELECT * FROM fucai.users WHERE id = #{id}
+    </select>
+
+    <select id="selectByEmail" resultType="object">
+        SELECT * FROM fucai.users WHERE email = #{email}
+    </select>
+
+    <update id="updateById">
+        UPDATE fucai.users SET
+        encrypted_password = #{encryptedPassword}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM fucai.users WHERE id = #{id}
+    </delete>
+</mapper>

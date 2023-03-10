@@ -1,0 +1,57 @@
+<!-- mapper/character.xml -->
+<mapper namespace="characters">
+    <insert id="insert">
+        INSERT INTO fucai.characters (
+        slug,
+        name,
+        description,
+        avatar_id,
+        greeting,
+        persona,
+        world_scenario,
+        example_chats,
+        visibility,
+        is_contentious,
+        creator_id
+        ) VALUES (
+        #{slug},
+        #{name},
+        #{description},
+        #{avatarId},
+        #{greeting},
+        #{persona},
+        #{worldScenario},
+        #{exampleChats},
+        #{visibility},
+        #{isContentious},
+        #{creatorId}
+        )
+    </insert>
+
+    <select id="selectById" resultType="object">
+        SELECT * FROM fucai.characters WHERE id = #{id}
+    </select>
+
+    <select id="selectBySlug" resultType="object">
+        SELECT * FROM fucai.characters WHERE slug = #{slug}
+    </select>
+
+    <update id="updateById">
+        UPDATE fucai.characters SET
+        slug = #{slug},
+        name = #{name},
+        description = #{description},
+        avatar_id = #{avatarId},
+        greeting = #{greeting},
+        persona = #{persona},
+        world_scenario = #{worldScenario},
+        example_chats = #{exampleChats},
+        visibility = #{visibility},
+        is_contentious = #{isContentious}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM fucai.characters WHERE id = #{id}
+    </delete>
+</mapper>
