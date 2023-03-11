@@ -1,6 +1,6 @@
 // controllers/characterController.js
 
-const Character = require('../models/character');
+const Character = require('../api/character');
 const { handleSuccess, handleError } = require('../utils/responseUtil');
 
 const CharacterController = {

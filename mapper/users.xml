@@ -1,7 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- mapper/users.xml -->
 <mapper namespace="users">
     <insert id="insert">
-        INSERT INTO fucai.users (
+        INSERT INTO users (
         email,
         encrypted_password
         ) VALUES (
@@ -11,20 +13,20 @@
     </insert>
 
     <select id="selectById" resultType="object">
-        SELECT * FROM fucai.users WHERE id = #{id}
+        SELECT * FROM users WHERE id = #{id}
     </select>
 
     <select id="selectByEmail" resultType="object">
-        SELECT * FROM fucai.users WHERE email = #{email}
+        SELECT * FROM users WHERE email = #{email}
     </select>
 
     <update id="updateById">
-        UPDATE fucai.users SET
+        UPDATE users SET
         encrypted_password = #{encryptedPassword}
         WHERE id = #{id}
     </update>
 
     <delete id="deleteById">
-        DELETE FROM fucai.users WHERE id = #{id}
+        DELETE FROM users WHERE id = #{id}
     </delete>
 </mapper>

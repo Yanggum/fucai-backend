@@ -1,8 +1,8 @@
 // services/chatService.js
 
-const Chat = require('../models/chat');
-const Character = require('../models/character');
-const ChatParticipant = require('../models/chatParticipant');
+const Chat = require('../api/chat');
+const Character = require('../api/character');
+const ChatParticipant = require('../api/chatParticipant');
 const { NotFoundError, UnauthorizedError } = require('../utils/errorUtil');
 
 const ChatService = {

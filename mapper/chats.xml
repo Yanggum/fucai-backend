@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- mapper/chats.xml -->
-
 <mapper namespace="chats">
     <insert id="insert">
-        INSERT INTO fucai.chats (
+        INSERT INTO chats (
         id,
         creator_id,
         name
@@ -14,17 +15,17 @@
     </insert>
 
     <select id="selectById" resultType="object">
-        SELECT * FROM fucai.chats WHERE id = #{id}
+        SELECT * FROM chats WHERE id = #{id}
     </select>
 
     <update id="updateById">
-        UPDATE fucai.chats SET
+        UPDATE chats SET
         name = #{name}
         WHERE id = #{id}
     </update>
 
     <delete id="deleteById">
-        DELETE FROM fucai.chats WHERE id = #{id}
+        DELETE FROM chats WHERE id = #{id}
     </delete>
 
     <select id="selectParticipantsByChatId" resultType="object">
@@ -34,15 +35,15 @@
         characters.name,
         characters.avatar_id
         FROM
-        fucai.chat_participants,
-        fucai.characters
+        chat_participants,
+        characters
         WHERE
         chat_participants.chat_id = #{chatId} AND
         chat_participants.character_id = characters.id
     </select>
 
     <insert id="addParticipant">
-        INSERT INTO fucai.chat_participants (
+        INSERT INTO chat_participants (
         chat_id,
         character_id
         ) VALUES (
@@ -52,6 +53,6 @@
     </insert>
 
     <delete id="removeParticipant">
-        DELETE FROM fucai.chat_participants WHERE chat_id = #{chatId} AND character_id = #{characterId}
+        DELETE FROM chat_participants WHERE chat_id = #{chatId} AND character_id = #{characterId}
     </delete>
 </mapper>

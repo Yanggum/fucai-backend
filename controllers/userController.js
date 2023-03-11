@@ -1,7 +1,7 @@
 // controllers/userController.js
 
-const User = require('../models/user');
-const { handleSuccess, handleError } = require('../utils/responseUtil');
+const User = require('../api/user');
+const { successResponse, errorResponse } = require('../utils/responseUtil');
 const { validateRegisterInput } = require('../utils/validationUtil');
 
 const UserController = {
@@ -11,9 +11,9 @@ const UserController = {
         try {
             validateRegisterInput(req.body);
             const user = await User.create(email, password);
-            handleSuccess(res, user);
+            successResponse(res, user);
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 
@@ -22,9 +22,9 @@ const UserController = {
 
         try {
             const user = await User.authenticate(email, password);
-            handleSuccess(res, user);
+            successResponse(res, user);
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 
@@ -33,18 +33,18 @@ const UserController = {
 
         try {
             const user = await User.findById(id);
-            handleSuccess(res, user);
+            successResponse(res, user);
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 
     async logOut(req, res) {
         try {
             //const user = await User.logOut(req.userData.userId);
-            handleSuccess(res, user);
+            successResponse(res, user);
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     }
 };

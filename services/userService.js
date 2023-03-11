@@ -1,6 +1,6 @@
 // services/userService.js
 
-const User = require('../models/user');
+const User = require('../api/user');
 const { BadRequestError, UnauthorizedError } = require('../utils/errorUtil');
 const { comparePasswords, hashPassword } = require('../utils/authUtil');
 

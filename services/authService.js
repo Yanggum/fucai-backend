@@ -1,6 +1,6 @@
 // services/authService.js
 
-const User = require('../models/user');
+const User = require('../api/user');
 const { UnauthorizedError } = require('../utils/errorUtil');
 const { generatePasswordHash } = require('../utils/authUtil');
 

@@ -1,6 +1,6 @@
 // controllers/authController.js
 
-const User = require('../models/user');
+const User = require('../api/user');
 const { handleSuccess, handleError } = require('../utils/responseUtil');
 const { UnauthorizedError } = require('../utils/errorUtil');
 const { generatePasswordHash } = require('../utils/authUtil');

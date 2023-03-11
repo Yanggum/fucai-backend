@@ -11,7 +11,6 @@ const characterRouter = require('./router/characterRouter');
 const chatRouter = require('./router/chatRouter');
 const userRouter = require('./router/userRouter');
 const pool = require('./config/database');
-const mybatis = require('./config/mapper');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
@@ -23,11 +22,14 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
+//const { createMapper } = require('mybatis-mapper');
 
-// // Set up MyBatis
-// mybatis.createMapper({
-//     mapperLocations: [__dirname + '/mapper/*.xml'],
-//     configLocation: __dirname + '/mybatis-config.xml',
+const path = require('path');
+
+// Set up MyBatis
+// createMapper({
+//     mapperLocations: '/mapper/*.xml',
+//     configLocation: 'mybatis-config.xml',
 //     pool: pool,
 // });
 
@@ -41,10 +43,10 @@ app.use('/chats', chatRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Error handling
-app.use((req, res, next) => {
-    const error = new NotFoundError('Resource not found');
-    next(error);
-});
+// app.use((req, res, next) => {
+//     const error = new NotFoundError('Resource not found');
+//     next(error);
+// });
 
 app.use(errorHandler);
 

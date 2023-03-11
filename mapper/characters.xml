@@ -1,7 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- mapper/character.xml -->
 <mapper namespace="characters">
     <insert id="insert">
-        INSERT INTO fucai.characters (
+        INSERT INTO characters (
         slug,
         name,
         description,
@@ -29,15 +31,15 @@
     </insert>
 
     <select id="selectById" resultType="object">
-        SELECT * FROM fucai.characters WHERE id = #{id}
+        SELECT * FROM characters WHERE id = #{id}
     </select>
 
     <select id="selectBySlug" resultType="object">
-        SELECT * FROM fucai.characters WHERE slug = #{slug}
+        SELECT * FROM characters WHERE slug = #{slug}
     </select>
 
     <update id="updateById">
-        UPDATE fucai.characters SET
+        UPDATE characters SET
         slug = #{slug},
         name = #{name},
         description = #{description},
@@ -52,6 +54,6 @@
     </update>
 
     <delete id="deleteById">
-        DELETE FROM fucai.characters WHERE id = #{id}
+        DELETE FROM characters WHERE id = #{id}
     </delete>
 </mapper>

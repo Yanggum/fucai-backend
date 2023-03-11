@@ -1,6 +1,6 @@
 // services/characterService.js
 
-const Character = require('../models/character');
+const Character = require('../api/character');
 const { NotFoundError, UnauthorizedError } = require('../utils/errorUtil');
 
 const CharacterService = {
