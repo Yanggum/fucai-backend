@@ -1,10 +1,10 @@
-const connector = require('../config/connector');
+const database = require('../config/database');
 const bcrypt = require("bcrypt");
 
 const User = {
     async findByEmail(email) {
         try {
-            const users = await connector.mybatisQuery("users.selectByEmail", { email: email});
+            const users = await database.select('*').from('users').where({ email: email });
             if (users.length === 0) {
                 return null;
             }
@@ -15,32 +15,31 @@ const User = {
         }
     },
 
-    async create(email, password, salt=10, nickname='test') {
+    async create(email, password, salt = 10, nickname = 'test') {
         try {
-            const hashedPassword = await bcrypt.hash(password, salt);
-            const user = {
-                email,
-                encryptedPassword: hashedPassword,
+            return await database('users').insert({
+                email: email,
+                encrypted_password: await bcrypt.hash(password, salt),
                 salt,
-                nickname,
-            };
-            return await connector.mybatisQuery("users.insert", user);
-        } catch {
+                name: nickname,
+                created_at: new Date(),
+                updated_at: new Date(),
+            });
+        } catch (error) {
+            console.error(err)
             return null;
         }
     },
 
     async update(id, email, hashedPassword, salt, nickname) {
         try {
-            const updatedUser = {
+            return await database('users').where({ id }).update({
                 email,
-                password: hashedPassword,
+                encrypted_password: hashedPassword,
                 salt,
                 nickname,
                 id,
-            };
-
-            return await connector.mybatisQuery("users.update", updatedUser);
+            });
         } catch {
             return null;
         }
@@ -48,7 +47,7 @@ const User = {
 
     async findById(id) {
         try {
-            const users = await connector.mybatisQuery("users.selectById", { id });
+            const users = await database.select('*').from('users').where({ id });
 
             if (users.length === 0) {
                 return null;
@@ -62,12 +61,13 @@ const User = {
 
     async delete(id) {
         try {
-            return await connector.mybatisQuery("users.delete", { id });
+            return await database('users').where({ id }).del();
         } catch {
             return null
         }
     },
 
+    //TODO: 해당구현없음.
     async logout(id) {
         try {
             return await connector.mybatisQuery("users.updateLastLogout", { id });

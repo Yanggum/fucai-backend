@@ -1,10 +1,10 @@
-const connector = require('../config/connector');
+const database = require('../config/database');
 const { v4: uuidv4 } = require('uuid');
 
 const Chat = {
     async findById(id) {
         try {
-            const chats = await connector.mybatisQuery('chats.selectById', { id });
+            const chats = await database.select('*').from('chats').where({ id });
 
             if (chats.length === 0) {
                 return null;
@@ -16,22 +16,21 @@ const Chat = {
         }
     },
 
-    async findAllByCharacterId(characterId) {
+    async findAllByCharacterId(id) {
         try {
-            return await connector.mybatisQuery('chats.selectAllByCharacterId', { characterId });
+            return await database.select('*').from('chats').where({ id });
         } catch {
             return [];
         }
     },
 
-    async create(name, characterId) {
+    async create(name, id) {
         try {
-            const chat = {
+            return await database.insert({
                 id: uuidv4(),
                 name,
-                characterId,
-            };
-            return await connector.mybatisQuery('chats.insert', chat);
+                creator_id: id,
+            }).into('chats');
         } catch {
             return null;
         }
@@ -39,11 +38,10 @@ const Chat = {
 
     async update(id, name) {
         try {
-            const updatedChat = {
+            return await database('chats').where({
                 name,
                 id,
-            };
-            return await connector.mybatisQuery('chats.update', updatedChat);
+            }).update();
         } catch {
             return null;
         }
@@ -51,7 +49,7 @@ const Chat = {
 
     async delete(id) {
         try {
-            return await connector.mybatisQuery('chats.delete', { id });
+            return await database('chats').where({ id }).del();
         } catch {
             return null;
         }

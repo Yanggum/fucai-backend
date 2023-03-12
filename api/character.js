@@ -1,9 +1,9 @@
-const connector = require('../config/connector');
+const database = require('../config/database');
 
 const Character = {
     async findAll() {
         try {
-            return await connector.mybatisQuery("characters.selectAll", {});
+            return await database.select('*').from('characters')
         } catch {
             return null;
         }
@@ -11,7 +11,7 @@ const Character = {
 
     async findById(id) {
         try {
-            const characters = await connector.mybatisQuery("characters.selectById", { id });
+            const characters = await database.select('*').from('characters').where({ id });
 
             if (characters.length === 0) {
                 return null;
@@ -25,15 +25,14 @@ const Character = {
 
     async create(name, description, creatorId, visibility, isContentious, slug) {
         try {
-            const character = {
+            return await database.insert({
                 name,
                 description,
-                creatorId,
+                creator_id: creatorId,
                 visibility,
-                isContentious,
+                is_contentious: isContentious,
                 slug
-            };
-            return await connector.mybatisQuery("characters.insert", character);
+            }).into('characters');
         } catch {
             return null;
         }
@@ -41,14 +40,13 @@ const Character = {
 
     async update(id, name, description, visibility, isContentious) {
         try {
-            const updatedCharacter = {
+            return await database('characters').where({ id }).update({
                 name,
                 description,
                 visibility,
-                isContentious,
+                is_contentious: isContentious,
                 id
-            };
-            return await connector.mybatisQuery("characters.update", updatedCharacter);
+            });
         } catch {
             return null;
         }
@@ -56,7 +54,7 @@ const Character = {
 
     async delete(id) {
         try {
-            return await connector.mybatisQuery("characters.delete", { id });
+            return await database('characters').where({ id }).del();
         } catch {
             return null;
         }
