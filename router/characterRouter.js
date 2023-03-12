@@ -23,10 +23,10 @@ router.post(
 
 router.get('/', characterController.getAll);
 
-router.get('/:slug', characterController.getById);
+router.get('/:id', characterController.getById);
 
 router.patch(
-    '/:slug',
+    '/:id',
     [
             authMiddleware,
             body('name').not().isEmpty(),
@@ -38,6 +38,6 @@ router.patch(
     characterController.update
 );
 
-router.delete('/:slug', authMiddleware, characterController.delete);
+router.delete('/:id', authMiddleware, characterController.delete);
 
 module.exports = router;

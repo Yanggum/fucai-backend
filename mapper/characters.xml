@@ -4,34 +4,34 @@
 <mapper namespace="characters">
     <insert id="insert">
         INSERT INTO characters (
-        slug,
-        name,
-        description,
-        avatar_id,
-        greeting,
-        persona,
-        world_scenario,
-        example_chats,
-        visibility,
-        is_contentious,
-        creator_id
+            slug,
+            name,
+            description,
+            avatar_id,
+            greeting,
+            persona,
+            world_scenario,
+            example_chats,
+            visibility,
+            is_contentious,
+            creator_id
         ) VALUES (
-        #{slug},
-        #{name},
-        #{description},
-        #{avatarId},
-        #{greeting},
-        #{persona},
-        #{worldScenario},
-        #{exampleChats},
-        #{visibility},
-        #{isContentious},
-        #{creatorId}
+            #{slug},
+            #{name},
+            #{description},
+            #{avatarId},
+            #{greeting},
+            #{persona},
+            #{worldScenario},
+            #{exampleChats},
+            #{visibility},
+            #{isContentious},
+            #{creatorId}
         )
     </insert>
 
     <select id="selectAll" >
-        SELECT * FROM characters order by id desc
+        SELECT * FROM characters ORDER BY id DESC
     </select>
 
     <select id="selectById" >

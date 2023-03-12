@@ -1,7 +1,8 @@
 // controllers/characterController.js
 
 const Character = require('../api/character');
-const { handleSuccess, handleError } = require('../utils/responseUtil');
+const User = require('../api/user');
+const { handleSuccess, handleError, successResponse, errorResponse} = require('../utils/responseUtil');
 
 const CharacterController = {
     async create(req, res) {
@@ -17,11 +18,20 @@ const CharacterController = {
             visibility,
             isContentious,
         } = req.body;
-        const { userId } = req.session;
+        const { email } = req.query;
+
+
+        const userInfo = await User.findByEmail(email)
 
         try {
-            const character = await Character.create(
-                userId,
+
+            if (!userInfo || userInfo.length === 0){
+                errorResponse(res, "User not found");
+                return
+            }
+
+
+            const character = await Character.create({
                 slug,
                 name,
                 description,
@@ -31,23 +41,22 @@ const CharacterController = {
                 worldScenario,
                 exampleChats,
                 visibility,
-                isContentious
-            );
-            handleSuccess(res, character);
+                isContentious,
+                creatorId: userInfo[0].id
+            });
+
+            successResponse(res, character);
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 
     async getAll(req, res) {
         try {
             const characters = await Character.findAll();
-
-
-
-            handleSuccess(res, characters);
+            successResponse(res, { list: [...characters[0]]});
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 
@@ -56,9 +65,9 @@ const CharacterController = {
 
         try {
             const character = await Character.findById(id);
-            handleSuccess(res, character);
+            successResponse(res, { item: character[0]});
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 
@@ -91,9 +100,9 @@ const CharacterController = {
                 visibility,
                 isContentious
             );
-            handleSuccess(res, updatedCharacter);
+            successResponse(res, updatedCharacter);
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 
@@ -102,9 +111,9 @@ const CharacterController = {
 
         try {
             await Character.delete(id);
-            handleSuccess(res, {});
+            successResponse(res, {});
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 };
