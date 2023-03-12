@@ -3,13 +3,7 @@ const connector = require('../config/connector');
 const Character = {
     async findAll() {
         try {
-            const characters = await connector.mybatisQuery("characters.selectAll", {});
-
-            const data = {
-                token,
-            }
-
-            return characters;
+            return await connector.mybatisQuery("characters.selectAll", {});
         } catch {
             return null;
         }
@@ -29,7 +23,8 @@ const Character = {
         }
     },
 
-    async create(name, description, creatorId, visibility, isContentious, slug) {
+    async create(characterProps
+    ) {
         try {
             const character = {
                 name,
@@ -37,24 +32,35 @@ const Character = {
                 creatorId,
                 visibility,
                 isContentious,
-                slug
-            };
-            return await connector.mybatisQuery("characters.insert", character);
+                slug,
+                avatarId,
+                greeting,
+                persona,
+                worldScenario,
+                exampleChats,
+            } = characterProps;
+            return await connector.mybatisQuery("characters.insert", {...character});
         } catch {
             return null;
         }
     },
 
-    async update(id, name, description, visibility, isContentious) {
+    async update(id, name, description, slug, avatarId, greeting, persona, worldScenario, exampleChats, visibility, isContentious) {
         try {
             const updatedCharacter = {
                 name,
                 description,
                 visibility,
                 isContentious,
-                id
+                id,
+                slug,
+                avatarId,
+                greeting,
+                persona,
+                worldScenario,
+                exampleChats
             };
-            return await connector.mybatisQuery("characters.update", updatedCharacter);
+            return await connector.mybatisQuery("characters.updateById", updatedCharacter);
         } catch {
             return null;
         }
@@ -62,7 +68,7 @@ const Character = {
 
     async delete(id) {
         try {
-            return await connector.mybatisQuery("characters.delete", { id });
+            return await connector.mybatisQuery("characters.deleteById", { id });
         } catch {
             return null;
         }

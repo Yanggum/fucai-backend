@@ -1,4 +1,4 @@
-create database fucai;
+#create database fucai;
 use fucai;
 
 create table fucai.users
@@ -17,7 +17,7 @@ create table fucai.characters
 (
     id             bigint unsigned auto_increment
         primary key,
-    slug           varchar(191)                            not null,
+    slug           varchar(191)                            null,
     name           varchar(255)                            null,
     description    text                                    null,
     avatar_id      varchar(255)                            null,
@@ -30,17 +30,12 @@ create table fucai.characters
     creator_id     bigint unsigned                         null,
     created_at     timestamp default CURRENT_TIMESTAMP     not null on update CURRENT_TIMESTAMP,
     updated_at     timestamp default '0000-00-00 00:00:00' not null,
-    constraint slug
-        unique (slug),
     constraint characters_ibfk_1
         foreign key (creator_id) references fucai.users (id)
 );
 
 create index creator_id
     on fucai.characters (creator_id);
-
-create index index_characters_on_slug
-    on fucai.characters (slug);
 
 create table fucai.chats
 (
