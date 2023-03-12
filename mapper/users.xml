@@ -12,11 +12,11 @@
         )
     </insert>
 
-    <select id="selectById" resultType="object">
+    <select id="selectById" >
         SELECT * FROM users WHERE id = #{id}
     </select>
 
-    <select id="selectByEmail" resultType="object">
+    <select id="selectByEmail" >
         SELECT * FROM users WHERE email = #{email}
     </select>
 

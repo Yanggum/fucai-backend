@@ -3,6 +3,7 @@ const env = require('../env');
 const database = require('./database');
 const pool = require("../env");
 const mybatisMapper = require("mybatis-mapper");
+const con = require("mysql2/promise");
 
 let mybatisFormat = {language: 'sql', indent: '  '};
 //let query = mybatisMapper.getStatement('fruit', 'testBasic', param, format);
@@ -21,7 +22,7 @@ const connector = {
         const statement = statementAndQuery.split('.')[0];
         const query = statementAndQuery.split('.')[1];
         const mappedStatement = mybatisMapper.getStatement(statement, query, params);
-        return database.query(mappedStatement);
+        return database.promise().query(mappedStatement)
     },
 };
 

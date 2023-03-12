@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const User = {
     async findByEmail(email) {
         try {
-            const users = await connector.mybatisQuery("users.selectByEmail", { email });
+            const users = await connector.mybatisQuery("users.selectByEmail", { email: email});
             if (users.length === 0) {
                 return null;
             }
@@ -76,9 +76,14 @@ const User = {
         }
     },
 
-    async login(email) {
+    async login(email, password) {
         try {
-            return await connector.mybatisQuery("users.updateLastLogin", { email });
+            const user = await User.findByEmail(email);
+            if (user === null) {
+                return false;
+            }
+
+            return await bcrypt.compare(password, user.encryptedPassword);
         } catch {
             return null;
         }

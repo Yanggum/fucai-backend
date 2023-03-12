@@ -30,11 +30,11 @@
         )
     </insert>
 
-    <select id="selectById" resultType="object">
+    <select id="selectById" >
         SELECT * FROM characters WHERE id = #{id}
     </select>
 
-    <select id="selectBySlug" resultType="object">
+    <select id="selectBySlug" >
         SELECT * FROM characters WHERE slug = #{slug}
     </select>
 

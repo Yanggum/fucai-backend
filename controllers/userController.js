@@ -3,6 +3,8 @@
 const User = require('../api/user');
 const { successResponse, errorResponse } = require('../utils/responseUtil');
 const { validateRegisterInput } = require('../utils/validationUtil');
+const jwt = require('jsonwebtoken');
+const { JWT_SECRET } = require('../env');
 
 const UserController = {
     async register(req, res) {
@@ -21,8 +23,12 @@ const UserController = {
         const { email, password } = req.body;
 
         try {
-            const user = await User.authenticate(email, password);
-            successResponse(res, user);
+            const user = await User.login(email, password);
+            const token = jwt.sign({email, password}, JWT_SECRET, {expiresIn: '24h'});
+            const data = {
+                token,
+            }
+            successResponse(res, data);
         } catch (err) {
             errorResponse(res, err);
         }

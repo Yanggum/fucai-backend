@@ -11,12 +11,10 @@ app.use(express.json());
 // 라우팅 설정
 const userRoutes = require('../router/userRouter');
 const chatRoutes = require('../router/chatRouter');
-const authRoutes = require('../router/authRouter');
 const characterRoutes = require('../router/characterRouter');
 app.use('/api/users', userRoutes);
 app.use('/api/characters', characterRoutes);
 app.use('/api/chats', chatRoutes);
-app.use('/api/auth', authRoutes);
 
 // 에러 핸들링 미들웨어
 const errorUtil = require('../utils/errorUtil');

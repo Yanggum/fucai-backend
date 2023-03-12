@@ -6,7 +6,6 @@ const cors = require('cors');
 
 const helmet = require('helmet');
 const { NotFoundError, errorHandler } = require('./utils/errorUtil');
-const authRouter = require('./router/authRouter');
 const characterRouter = require('./router/characterRouter');
 const chatRouter = require('./router/chatRouter');
 const userRouter = require('./router/userRouter');
@@ -22,22 +21,13 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
-//const { createMapper } = require('mybatis-mapper');
 
 const path = require('path');
 
-// Set up MyBatis
-// createMapper({
-//     mapperLocations: '/mapper/*.xml',
-//     configLocation: 'mybatis-config.xml',
-//     pool: pool,
-// });
-
 // Routes
-app.use('/auth', authRouter);
-app.use('/users', userRouter);
-app.use('/characters', characterRouter);
-app.use('/chats', chatRouter);
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/characters', characterRouter);
+app.use('/api/v1/chats', chatRouter);
 
 // Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
