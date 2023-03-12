@@ -1,10 +1,15 @@
-// use change env_backup.js -> env.js
+const mysql2 = require('mysql2');
+const {mariaDB} = require("./env_backup");
+
+
 module.exports = {
     env: 'local',
     mariaDB: {
-        DBHOST: "",
-        DBUSER: "",
-        DBPASSWORD: "",
-        DB: ""
-    }
-}
+        DB_HOST: "",
+        DB_PORT: "",
+        DB_USER: "",
+        DB_PASSWORD: "",
+        DB_NAME: "" // fucai
+    },
+    JWT_SECRET: ''
+};

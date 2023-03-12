@@ -42,6 +42,9 @@ const CharacterController = {
     async getAll(req, res) {
         try {
             const characters = await Character.findAll();
+
+
+
             handleSuccess(res, characters);
         } catch (err) {
             handleError(res, err);

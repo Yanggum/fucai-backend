@@ -3,7 +3,13 @@ const connector = require('../config/connector');
 const Character = {
     async findAll() {
         try {
-            return await connector.mybatisQuery("characters.selectAll", {});
+            const characters = await connector.mybatisQuery("characters.selectAll", {});
+
+            const data = {
+                token,
+            }
+
+            return characters;
         } catch {
             return null;
         }

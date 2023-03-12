@@ -30,6 +30,10 @@
         )
     </insert>
 
+    <select id="selectAll" >
+        SELECT * FROM characters order by id desc
+    </select>
+
     <select id="selectById" >
         SELECT * FROM characters WHERE id = #{id}
     </select>

@@ -8,7 +8,7 @@ const validationMiddleware = require('../middlewares/validationMiddleware');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 router.post(
-    '/characters',
+    '/',
     [
             authMiddleware,
             body('slug').isSlug(),
@@ -21,12 +21,12 @@ router.post(
     characterController.create
 );
 
-router.get('/characters', characterController.getAll);
+router.get('/', characterController.getAll);
 
-router.get('/characters/:slug', characterController.getById);
+router.get('/:slug', characterController.getById);
 
 router.patch(
-    '/characters/:slug',
+    '/:slug',
     [
             authMiddleware,
             body('name').not().isEmpty(),
@@ -38,6 +38,6 @@ router.patch(
     characterController.update
 );
 
-router.delete('/characters/:slug', authMiddleware, characterController.delete);
+router.delete('/:slug', authMiddleware, characterController.delete);
 
 module.exports = router;
