@@ -1,7 +1,7 @@
 // controllers/characterController.js
 
 const Character = require('../api/character');
-const { handleSuccess, handleError } = require('../utils/responseUtil');
+const { successResponse, errorResponse } = require('../utils/responseUtil');
 
 const CharacterController = {
     async create(req, res) {
@@ -33,18 +33,18 @@ const CharacterController = {
                 visibility,
                 isContentious
             );
-            handleSuccess(res, character);
+            successResponse(res, character);
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 
     async getAll(req, res) {
         try {
             const characters = await Character.findAll();
-            handleSuccess(res, characters);
+            successResponse(res, characters);
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 
@@ -53,9 +53,9 @@ const CharacterController = {
 
         try {
             const character = await Character.findById(id);
-            handleSuccess(res, character);
+            successResponse(res, character);
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 
@@ -88,9 +88,9 @@ const CharacterController = {
                 visibility,
                 isContentious
             );
-            handleSuccess(res, updatedCharacter);
+            successResponse(res, updatedCharacter);
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 
@@ -99,9 +99,9 @@ const CharacterController = {
 
         try {
             await Character.delete(id);
-            handleSuccess(res, {});
+            successResponse(res, {});
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 };

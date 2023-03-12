@@ -1,7 +1,7 @@
 // controllers/authController.js
 
 const User = require('../api/user');
-const { handleSuccess, handleError } = require('../utils/responseUtil');
+const { successResponse, errorResponse } = require('../utils/responseUtil');
 const { UnauthorizedError } = require('../utils/errorUtil');
 const { generatePasswordHash } = require('../utils/authUtil');
 
@@ -19,9 +19,9 @@ const AuthController = {
                 throw new UnauthorizedError('Invalid email or password');
             }
             req.session.userId = user.id;
-            handleSuccess(res, user);
+            successResponse(res, user);
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 
@@ -32,18 +32,18 @@ const AuthController = {
         try {
             const user = await User.create(email, encryptedPassword);
             req.session.userId = user.id;
-            handleSuccess(res, user);
+            successResponse(res, user);
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 
     async logout(req, res) {
         req.session.destroy((err) => {
             if (err) {
-                handleError(res, err);
+                errorResponse(res, err);
             } else {
-                handleSuccess(res, {});
+                successResponse(res, {});
             }
         });
     },
@@ -53,9 +53,9 @@ const AuthController = {
 
         try {
             const user = await User.findById(userId);
-            handleSuccess(res, user);
+            successResponse(res, user);
         } catch (err) {
-            handleError(res, err);
+            errorResponse(res, err);
         }
     },
 };

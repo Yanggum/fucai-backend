@@ -6,9 +6,6 @@ const cors = require('cors');
 
 const helmet = require('helmet');
 const { NotFoundError, errorHandler } = require('./utils/errorUtil');
-const characterRouter = require('./router/characterRouter');
-const chatRouter = require('./router/chatRouter');
-const userRouter = require('./router/userRouter');
 const pool = require('./config/database');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
@@ -25,9 +22,9 @@ app.use(express.json());
 const path = require('path');
 
 // Routes
-app.use('/api/v1/users', userRouter);
-app.use('/api/v1/characters', characterRouter);
-app.use('/api/v1/chats', chatRouter);
+app.use('/api/v1', require('./router/userRouter'));
+app.use('/api/v1', require('./router/characterRouter'));
+app.use('/api/v1', require('./router/chatRouter'));
 
 // Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
