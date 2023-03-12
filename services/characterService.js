@@ -17,12 +17,12 @@ const CharacterService = {
         return character;
     },
 
-    async createCharacter(name, description, avatarId, greeting, persona, worldScenario, exampleChats, visibility, isContentious, creatorId) {
-        const character = await Character.create(name, description, avatarId, greeting, persona, worldScenario, exampleChats, visibility, isContentious, creatorId);
+    async createCharacter(name, description, avatar_id, greeting, persona, worldScenario, exampleChats, visibility, is_contentious, creatorId) {
+        const character = await Character.create(name, description, avatar_id, greeting, persona, worldScenario, exampleChats, visibility, is_contentious, creatorId);
         return character;
     },
 
-    async updateCharacter(id, name, description, avatarId, greeting, persona, worldScenario, exampleChats, visibility, isContentious, creatorId) {
+    async updateCharacter(id, name, description, avatar_id, greeting, persona, worldScenario, exampleChats, visibility, is_contentious, creatorId) {
         const character = await Character.findById(id);
         if (!character) {
             throw new NotFoundError(`Character with ID ${id} not found`);
@@ -30,7 +30,7 @@ const CharacterService = {
         if (character.creatorId !== creatorId) {
             throw new UnauthorizedError(`Not authorized to update character with ID ${id}`);
         }
-        const updatedCharacter = await Character.update(id, name, description, avatarId, greeting, persona, worldScenario, exampleChats, visibility, isContentious);
+        const updatedCharacter = await Character.update(id, name, description, avatar_id, greeting, persona, worldScenario, exampleChats, visibility, is_contentious);
         return updatedCharacter;
     },
 

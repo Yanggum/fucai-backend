@@ -15,7 +15,7 @@ router.post(
             body('name').not().isEmpty(),
             body('description').not().isEmpty(),
             body('visibility').isIn(['public', 'private']),
-            body('isContentious').isBoolean(),
+            body('is_contentious').isBoolean(),
     ],
     validationMiddleware,
     characterController.create
@@ -32,7 +32,7 @@ router.patch(
             body('name').not().isEmpty(),
             body('description').not().isEmpty(),
             body('visibility').isIn(['public', 'private']),
-            body('isContentious').isBoolean(),
+            body('is_contentious').isBoolean(),
     ],
     validationMiddleware,
     characterController.update

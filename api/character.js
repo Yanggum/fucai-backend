@@ -1,9 +1,9 @@
-const connector = require('../config/connector');
+const database = require('../config/database');
 
 const Character = {
     async findAll() {
         try {
-            return await connector.mybatisQuery("characters.selectAll", {});
+            return await database.select('*').from('characters')
         } catch {
             return null;
         }
@@ -11,7 +11,7 @@ const Character = {
 
     async findById(id) {
         try {
-            const characters = await connector.mybatisQuery("characters.selectById", { id });
+            const characters = await database.select('*').from('characters').where({ id });
 
             if (characters.length === 0) {
                 return null;
@@ -23,44 +23,42 @@ const Character = {
         }
     },
 
-    async create(characterProps
-    ) {
+    async create(characterProps) {
         try {
             const character = {
                 name,
                 description,
-                creatorId,
+                creator_id,
                 visibility,
-                isContentious,
+                is_contentious,
                 slug,
-                avatarId,
+                avatar_id,
                 greeting,
                 persona,
-                worldScenario,
-                exampleChats,
+                world_scenario,
+                example_chats
             } = characterProps;
-            return await connector.mybatisQuery("characters.insert", {...character});
+            return await database.insert(character).into('characters');
         } catch {
             return null;
         }
     },
 
-    async update(id, name, description, slug, avatarId, greeting, persona, worldScenario, exampleChats, visibility, isContentious) {
+    async update(id, name, description, slug, avatar_id, greeting, persona, world_scenario, example_chats, visibility, is_contentious) {
         try {
-            const updatedCharacter = {
+            return await database('characters').where({ id }).update({
                 name,
                 description,
                 visibility,
-                isContentious,
+                is_contentious,
                 id,
                 slug,
-                avatarId,
+                avatar_id,
                 greeting,
                 persona,
-                worldScenario,
-                exampleChats
-            };
-            return await connector.mybatisQuery("characters.updateById", updatedCharacter);
+                world_scenario,
+                example_chats
+            });
         } catch {
             return null;
         }
@@ -68,7 +66,7 @@ const Character = {
 
     async delete(id) {
         try {
-            return await connector.mybatisQuery("characters.deleteById", { id });
+            return await database('characters').where({ id }).del();
         } catch {
             return null;
         }

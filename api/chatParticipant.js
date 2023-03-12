@@ -1,13 +1,12 @@
-const connector = require('../config/connector');
+const database = require('../config/database');
 
 const ChatParticipant = {
     async create(chatId, userId) {
         try {
-            const chatParticipant = {
-                chatId,
-                userId
-            };
-            return await connector.mybatisQuery("chatParticipant.insert", chatParticipant);
+            return await database.insert({
+                chat_id: chatId,
+                user_id: userId,
+            }).into('chat_participants');
         } catch {
             return null;
         }
@@ -15,8 +14,7 @@ const ChatParticipant = {
 
     async findByChatId(chatId) {
         try {
-            const chatParticipants = await connector.mybatisQuery("chatParticipant.selectByChatId", { chatId });
-            return chatParticipants;
+            return await database.select('*').from('chat_participants').where({ chat_id: chatId });
         } catch (e) {
             return null;
         }
@@ -24,7 +22,7 @@ const ChatParticipant = {
 
     async findByChatIdAndUserId(chatId, userId) {
         try {
-            const chatParticipants = await connector.mybatisQuery("chatParticipant.selectByChatIdAndUserId", { chatId, userId });
+            const chatParticipants = await database.select('*').from('chat_participants').where({ chat_id: chatId, user_id: userId });
             if (chatParticipants.length === 0) {
                 return null;
             }
@@ -34,17 +32,33 @@ const ChatParticipant = {
         }
     },
 
+    async isParticipant(chatId, userId) {
+        try {
+            const chatParticipants = await database.select('*').from('chat_participants').where({ chat_id: chatId, user_id: userId });
+            if (chatParticipants.length === 0) {
+                return false;
+            }
+            return true;
+        } catch (e) {
+            return false;
+        }
+    },
+
     async delete(chatId, userId) {
         try {
-            const chatParticipant = {
-                chatId,
-                userId
-            };
-            return await connector.mybatisQuery("chatParticipant.delete", chatParticipant);
+            return await database('chat_participants').where({ chat_id: chatId, user_id: userId }).del();
         } catch {
             return null;
         }
     },
+
+    async deleteByChatId(chatId) {
+        try {
+            return await database('chat_participants').where({ chat_id: chatId }).del();
+        } catch {
+            return null;
+        }
+    }
 };
 
 module.exports = ChatParticipant;

@@ -1,8 +1,7 @@
 // controllers/characterController.js
-
-const Character = require('../api/character');
-const User = require('../api/user');
-const { handleSuccess, handleError, successResponse, errorResponse} = require('../utils/responseUtil');
+const Character = require('../api/character')
+const { successResponse, errorResponse } = require('../utils/responseUtil')
+const User = require("../api/user");
 
 const CharacterController = {
     async create(req, res) {
@@ -10,15 +9,15 @@ const CharacterController = {
             slug,
             name,
             description,
-            avatarId,
+            avatar_id,
             greeting,
             persona,
-            worldScenario,
-            exampleChats,
+            world_scenario,
+            example_chats,
             visibility,
-            isContentious,
-        } = req.body;
-        const { email } = req.query;
+            is_contentious,
+        } = req.body
+        const { email } = req.query
 
 
         const userInfo = await User.findByEmail(email)
@@ -26,7 +25,7 @@ const CharacterController = {
         try {
 
             if (!userInfo || userInfo.length === 0){
-                errorResponse(res, "User not found");
+                errorResponse(res, "User not found")
                 return
             }
 
@@ -35,56 +34,55 @@ const CharacterController = {
                 slug,
                 name,
                 description,
-                avatarId,
+                avatar_id,
                 greeting,
                 persona,
-                worldScenario,
-                exampleChats,
+                world_scenario,
+                example_chats,
                 visibility,
-                isContentious,
-                creatorId: userInfo[0].id
-            });
-
-            successResponse(res, character);
+                is_contentious,
+                creator_id: userInfo.id
+            })
+            successResponse(res, character)
         } catch (err) {
-            errorResponse(res, err);
+            errorResponse(res, err)
         }
     },
 
     async getAll(req, res) {
         try {
-            const characters = await Character.findAll();
-            successResponse(res, { list: [...characters[0]]});
+            const characters = await Character.findAll()
+            successResponse(res, characters)
         } catch (err) {
-            errorResponse(res, err);
+            errorResponse(res, err)
         }
     },
 
     async getById(req, res) {
-        const { id } = req.params;
+        const { id } = req.params
 
         try {
-            const character = await Character.findById(id);
-            successResponse(res, { item: character[0]});
+            const character = await Character.findById(id)
+            successResponse(res, character)
         } catch (err) {
-            errorResponse(res, err);
+            errorResponse(res, err)
         }
     },
 
     async update(req, res) {
-        const { id } = req.params;
+        const { id } = req.params
         const {
             slug,
             name,
             description,
-            avatarId,
+            avatar_id,
             greeting,
             persona,
             worldScenario,
             exampleChats,
             visibility,
-            isContentious,
-        } = req.body;
+            is_contentious,
+        } = req.body
 
         try {
             const updatedCharacter = await Character.update(
@@ -92,30 +90,30 @@ const CharacterController = {
                 slug,
                 name,
                 description,
-                avatarId,
+                avatar_id,
                 greeting,
                 persona,
                 worldScenario,
                 exampleChats,
                 visibility,
-                isContentious
-            );
-            successResponse(res, updatedCharacter);
+                is_contentious
+            )
+            successResponse(res, updatedCharacter)
         } catch (err) {
-            errorResponse(res, err);
+            errorResponse(res, err)
         }
     },
 
     async delete(req, res) {
-        const { id } = req.params;
+        const { id } = req.params
 
         try {
-            await Character.delete(id);
-            successResponse(res, {});
+            await Character.delete(id)
+            successResponse(res, {})
         } catch (err) {
-            errorResponse(res, err);
+            errorResponse(res, err)
         }
     },
-};
+}
 
-module.exports = CharacterController;
+module.exports = CharacterController

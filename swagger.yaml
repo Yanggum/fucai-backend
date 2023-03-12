@@ -115,7 +115,7 @@ paths:
                   type: string
                   enum: [public, private]
                   description: Visibility of the character
-                isContentious:
+                is_contentious:
                   type: boolean
                   description: Whether the character is contentious or not
               required:
@@ -123,7 +123,7 @@ paths:
                 - name
                 - description
                 - visibility
-                - isContentious
+                - is_contentious
       responses:
         '201':
           description: Created a new character
@@ -149,7 +149,7 @@ paths:
                     type: string
                     enum: [public, private]
                     description: Visibility of the created character
-                  isContentious:
+                  is_contentious:
                     type: boolean
                     description: Whether the created character is contentious or not
         '400':
@@ -228,7 +228,7 @@ paths:
                   type: string
                   enum: [public, private]
                   description: New visibility of the character
-                isContentious:
+                is_contentious:
                   type: boolean
                   description: Whether the character is contentious or not
               required:
