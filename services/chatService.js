@@ -7,8 +7,7 @@ const { NotFoundError, UnauthorizedError } = require('../utils/errorUtil');
 
 const ChatService = {
     async getAllChats(userId) {
-        const chats = await Chat.findAll(userId);
-        return chats;
+        return await Chat.findAllByUserId(userId);
     },
 
     async getChatById(id, userId) {
@@ -20,8 +19,7 @@ const ChatService = {
         if (!isParticipant) {
             throw new UnauthorizedError(`Not authorized to view chat with ID ${id}`);
         }
-        const chatParticipants = await ChatParticipant.findByChatId(id);
-        chat.participants = chatParticipants;
+        chat.participants = await ChatParticipant.findByChatId(id);
         return chat;
     },
 
@@ -39,28 +37,36 @@ const ChatService = {
         return chat;
     },
 
+    async createChatItem(chatId, creatorId, type, text) {
+        return await Chat.createChatItem(chatId, creatorId, type, text);
+    },
+
+    async updateChatItem(chatItemId, text) {
+        return await Chat.modifyChatItem(chatItemId, text);
+    },
+
+    async getChatItems(chatId) {
+        return await Chat.getChatItems(chatId);
+    },
+
     async updateChat(id, name, userId) {
         const chat = await Chat.findById(id);
         if (!chat) {
             throw new NotFoundError(`Chat with ID ${id} not found`);
         }
-        if (chat.creatorId !== userId) {
+        if (chat.creator_id !== parseInt(userId)) {
             throw new UnauthorizedError(`Not authorized to update chat with ID ${id}`);
         }
-        const updatedChat = await Chat.update(id, name);
-        return updatedChat;
+        return await Chat.update(id, name);
     },
 
-    async deleteChat(id, userId) {
-        const chat = await Chat.findById(id);
-        if (!chat) {
-            throw new NotFoundError(`Chat with ID ${id} not found`);
-        }
-        if (chat.creatorId !== userId) {
-            throw new UnauthorizedError(`Not authorized to delete chat with ID ${id}`);
-        }
+    async deleteChat(id) {
         await ChatParticipant.deleteByChatId(id);
         await Chat.delete(id);
+    },
+
+    async deleteChatItem(chatItemId) {
+        return await Chat.deleteChatItem(chatItemId);
     },
 
     async addParticipant(chatId, characterId) {

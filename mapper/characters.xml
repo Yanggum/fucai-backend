@@ -19,13 +19,13 @@
             #{slug},
             #{name},
             #{description},
-            #{avatarId},
+            #{avatar_id},
             #{greeting},
             #{persona},
             #{worldScenario},
             #{exampleChats},
             #{visibility},
-            #{isContentious},
+            #{is_contentious},
             #{creatorId}
         )
     </insert>
@@ -47,13 +47,13 @@
         slug = #{slug},
         name = #{name},
         description = #{description},
-        avatar_id = #{avatarId},
+        avatar_id = #{avatar_id},
         greeting = #{greeting},
         persona = #{persona},
         world_scenario = #{worldScenario},
         example_chats = #{exampleChats},
         visibility = #{visibility},
-        is_contentious = #{isContentious}
+        is_contentious = #{is_contentious}
         WHERE id = #{id}
     </update>
 
